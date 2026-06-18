@@ -4,9 +4,8 @@ async function buscarLider(consulta) {
     return;
   }
   const resultado = document.getElementById('ai-resultado');
-  resultado.innerHTML = '<p class="ai-cargando">🔍 Buscando con IA...</p>';
-  try {
-    const KEY = "AQ.Ab8RN6Korp9yK-053CeBtGTLmk2zBpqsn-f_KYJj2jOD6M5Esw";
+  resultado.innerHTML = '<p class="ai-cargando">🔍 Buscando con IA...</p>'
+  const KEY = API_KEY";
     const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=" + KEY, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
