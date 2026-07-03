@@ -14,9 +14,10 @@ const response = await fetch(PROXY_URL, {
     prompt: `Información sobre el líder político: "${consulta}". Responde SOLO en JSON sin markdown: {"nombre":"nombre completo","pais":"país","cargo":"cargo actual","bandera":"emoji bandera","region":"america o europa o asia o africa o oceania","resumen":"2 líneas sobre su gobierno","politicas":["política 1","política 2","política 3"]}`,
     conBusqueda: false
   })
-});
-const data = await response.json();
-const texto = data.contenido;
+})
+    console.log('Respuesta del proxy:', JSON.stringify(data));
+    const data = await response.json();
+    const texto = data.contenido;
     const clean = texto.replace(/```json|```/g,'').trim();
     const lider = JSON.parse(clean);
     resultado.innerHTML = `
