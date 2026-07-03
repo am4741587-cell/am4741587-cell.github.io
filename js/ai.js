@@ -6,24 +6,17 @@ async function buscarLider(consulta) {
   const resultado = document.getElementById('ai-resultado');
   resultado.innerHTML = '<p class="ai-cargando">🔍 Buscando con IA...</p>';
   try {
-    const KEY = "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";
-    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + KEY
-      },
-      body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
-        messages: [{
-          role: "user",
-          content: `Información sobre el líder político: "${consulta}". Responde SOLO en JSON sin markdown ni texto adicional: {"nombre":"nombre completo","pais":"país","cargo":"cargo actual","bandera":"emoji bandera","region":"america o europa o asia o africa o oceania","resumen":"2 líneas sobre su gobierno","politicas":["política 1","política 2","política 3"]}`
-        }],
-        temperature: 0.3
-      })
-    });
-    const data = await response.json();
-    const texto = data.choices[0].message.content;
+    const PROXY_URL = "https://groq-proxy-mj3y.onrender.com/api/consulta";
+const response = await fetch(PROXY_URL, {
+  method: "POST",
+  headers: {"Content-Type": "application/json"},
+  body: JSON.stringify({
+    prompt: `Información sobre el líder político: "${consulta}". Responde SOLO en JSON sin markdown: {"nombre":"nombre completo","pais":"país","cargo":"cargo actual","bandera":"emoji bandera","region":"america o europa o asia o africa o oceania","resumen":"2 líneas sobre su gobierno","politicas":["política 1","política 2","política 3"]}`,
+    conBusqueda: false
+  })
+});
+const data = await response.json();
+const texto = data.contenido;
     const clean = texto.replace(/```json|```/g,'').trim();
     const lider = JSON.parse(clean);
     resultado.innerHTML = `
